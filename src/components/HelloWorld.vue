@@ -25,7 +25,7 @@
   <button @click="Tri(this.trieur)">Trier</button>
   <section id="crypto-main">
     <div class="items" v-for="crypto in reponse" v-bind:key="crypto.id">
-      <div class="symbols">
+      <div class="crypto_symbol">
         <span v-if="!modePro"
           >{{ crypto.symbol.slice(0, 6)
           }}<span v-if="crypto.symbol.length > 6">...</span></span
@@ -55,7 +55,7 @@
             style="transform: scaleY(-1)"
           />
         </div>
-        <div class="avgPrice" @click="SetModePro">
+        <div class="crypto_avgPrice" @click="SetModePro">
           <span>Avg : </span>
           <span v-if="!modePro">{{ parseFloat(crypto.weightedAvgPrice).toFixed(4) }} 
             <span v-if="crypto.symbol.length <= 6">{{(crypto.symbol).slice(-3)}}</span>
@@ -66,7 +66,11 @@
             <span v-else>{{ crypto.weightedAvgPrice }} {{(crypto.symbol).slice(-4)}}</span>
           </span>
         </div>
-        <div class="graphs"></div>
+        <div class="modePro-infos" v-if="modePro">
+          <div class="crypto_priceChange">Price change : {{crypto.priceChange}}</div>
+          <div class="crypto_volume">Volume : {{crypto.volume}}</div>
+          <div></div>
+        </div>
       </div>
     </div>
   </section>
@@ -262,11 +266,11 @@ a {
   color: #42b983;
 }
 .items-modePro.items-modePro{
-  width: 32%;
+  width: 28%;
 }
 .items {
   width:22% ;
-  height: 70px;
+  min-height: 70px;
   border-radius: 15px;
   background: #ffffffe0;
   min-width: 200px;
@@ -295,7 +299,7 @@ a {
   align-items: center;
   flex-wrap: wrap;
 }
-.symbols {
+.crypto_symbol {
   color: rgba(0, 0, 0, 0.795);
   font-size: 18px;
   font-weight: 700;
@@ -310,7 +314,7 @@ a {
 img {
   vertical-align: bottom;
 }
-.avgPrice {
+.crypto_avgPrice {
   margin-top: 5px;
   white-space: nowrap;
 }

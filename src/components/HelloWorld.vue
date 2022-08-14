@@ -158,6 +158,7 @@ export default {
       });
     },
     Tri(trieur) {
+      trieur = trieur.toUpperCase();
       let reponse = [];
       for (var i = 1; i < this.cryptos.length; i++) {
         let x = this.cryptos[i];

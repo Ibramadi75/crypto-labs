@@ -1,0 +1,135 @@
+#crypto-main {
+  width: 80%;
+}
+
+#app {
+  background-color: red;
+}
+
+h3 {
+  margin: 40px 0 0;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  display: block;
+  margin: 20px 10px;
+}
+
+a {
+  color: #42b983;
+}
+
+img {
+  vertical-align: bottom;
+}
+
+.items {
+  width: 22%;
+  min-height: 70px;
+  border-radius: 15px;
+  background: #ffffffe0;
+  min-width: 200px;
+  max-width: 45%;
+  margin: 1%;
+  padding-left: 20px;
+  font-size: 12px;
+  margin-top: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 13px 9px 0px;
+}
+
+.items-modePro.items-modePro {
+  width: 28%;
+}
+
+.items > div {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-right: 5px;
+}
+
+#crypto-main {
+  margin: auto;
+  margin-top: 50px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.rest {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70%;
+}
+
+.crypto_symbol {
+  color: rgba(0, 0, 0, 0.795);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.crypto_avgPrice {
+  margin-top: 5px;
+  white-space: nowrap;
+}
+
+#loading {
+  width: 100px;
+  height: 10px;
+
+  position: fixed;
+  top: 50%;
+  left: 45%;
+  transform: translate(-50%, -50%);
+
+  border-radius: 10px;
+}
+
+#loading::before {
+  background-color: rgba(53, 66, 187, 0.39);
+
+  position: absolute;
+  content: " ";
+  width: 10px;
+  height: 10px;
+
+  animation: loadingAnimation infinite 1s linear;
+}
+
+@keyframes loadingAnimation {
+  0% {
+    width: 10px;
+    margin-left: 90px;
+  }
+
+  25% {
+    width: 100px;
+    margin-left: 0%;
+  }
+
+  50% {
+    width: 10px;
+    margin-left: 0%;
+  }
+
+  75% {
+    width: 100px;
+    margin-left: 0%;
+  }
+
+  100% {
+    width: 10px;
+    margin-left: 90px;
+  }
+}

@@ -10,10 +10,7 @@
   >
     Z &rarr; A
   </button>
-  <button
-    @click="SetModePro(), Selected('arrondirBtn')"
-    id="arrondirBtn"
-  >
+  <button @click="SetModePro(), Selected('arrondirBtn')" id="arrondirBtn">
     Mode Pro
   </button>
   <input
@@ -57,18 +54,27 @@
         </div>
         <div class="crypto_avgPrice" @click="SetModePro">
           <span>Avg : </span>
-          <span v-if="!modePro">{{ parseFloat(crypto.weightedAvgPrice).toFixed(4) }} 
-            <span v-if="crypto.symbol.length <= 6">{{(crypto.symbol).slice(-3)}}</span>
-            <span v-else>{{(crypto.symbol).slice(-4)}}</span>
+          <span v-if="!modePro"
+            >{{ parseFloat(crypto.weightedAvgPrice).toFixed(4) }}
+            <span v-if="crypto.symbol.length <= 6">{{
+              crypto.symbol.slice(-3)
+            }}</span>
+            <span v-else>{{ crypto.symbol.slice(-4) }}</span>
           </span>
           <span v-else>
-            <span v-if="crypto.symbol.length <= 6">{{ crypto.weightedAvgPrice }} {{(crypto.symbol).slice(-3)}}</span>
-            <span v-else>{{ crypto.weightedAvgPrice }} {{(crypto.symbol).slice(-4)}}</span>
+            <span v-if="crypto.symbol.length <= 6"
+              >{{ crypto.weightedAvgPrice }} {{ crypto.symbol.slice(-3) }}</span
+            >
+            <span v-else
+              >{{ crypto.weightedAvgPrice }} {{ crypto.symbol.slice(-4) }}</span
+            >
           </span>
         </div>
         <div class="modePro-infos" v-if="modePro">
-          <div class="crypto_priceChange">Price change : {{crypto.priceChange}}</div>
-          <div class="crypto_volume">Volume : {{crypto.volume}}</div>
+          <div class="crypto_priceChange">
+            Price change : {{ crypto.priceChange }}
+          </div>
+          <div class="crypto_volume">Volume : {{ crypto.volume }}</div>
           <div></div>
         </div>
       </div>
@@ -81,7 +87,8 @@ export default {
   data() {
     return {
       cryptos: [
-        {
+        // next line allow to dev (see beforeMount()) 
+        /* {
           symbol: "ETHBTC", //used
           priceChange: "0.00121100",
           priceChangePercent: "-1.560", // variation en % des dernières 24h
@@ -126,8 +133,8 @@ export default {
           firstId: 82565804,
           lastId: 82582323,
           count: 16520,
-        },
-      ],
+        },*/
+      ], 
       trieur: "",
       reponse: [],
       askedForData: false,
@@ -150,12 +157,16 @@ export default {
   },
   methods: {
     UpdatePost() {
+      // make a new request to the api
       if (!this.askedForData) {
+        // launch the loading animation
         this.askedForData = true;
         setTimeout(() => {
-          this.UpdatePost(), $("#loading").css("opacity", "0");
+          // and destroy it
+          this.UpdatePost(), $("#loading").remove();
         }, 2500);
       }
+      // getting data from the api
       axios
         .get("https://api2.binance.com/api/v3/ticker/24hr")
         .then(
@@ -175,17 +186,22 @@ export default {
       // );
     },
     Sort(list) {
+      // sort a to z
       list.sort((a, b) => {
         return a.symbol > b.symbol ? 1 : -1;
       });
     },
     SortRev(list) {
+      // sort z to a
       list.sort((b, a) => {
         return a.symbol > b.symbol ? 1 : -1;
       });
     },
     Tri(trieur) {
+      // search bar
+      // symbols are in capital so we convert input to capital
       trieur = trieur.toUpperCase();
+      // creating a table that will contain the result of search -> the goal is to keep data safe in the original table and do not make a new request to the APIs
       let reponse = [];
       for (var i = 1; i < this.cryptos.length; i++) {
         let x = this.cryptos[i];
@@ -197,18 +213,17 @@ export default {
       return (this.reponse = reponse);
     },
     SetModePro(buttonId) {
+      // switch between mode Pro and standard mode
       if (this.modePro) {
-        $(".items").removeClass("items-modePro"),
-        this.modePro = false
+        $(".items").removeClass("items-modePro"), (this.modePro = false);
       } else {
-        $(".items").addClass("items-modePro"),
-        this.modePro = true
+        $(".items").addClass("items-modePro"), (this.modePro = true);
       }
     },
     Selected(buttonId) {
+    // style stay for selected buttons
       let x = this.btnList.indexOf(buttonId);
-      if (this.btnList[x] == false) {
-      } else {
+      if (!this.btnList[x]) {
         $(buttonId).css("box-shadow", "none");
         for (var i = 0; i < this.btnList.length; i++) {
           if (this.btnList[i].label == buttonId) {
@@ -226,6 +241,7 @@ export default {
             }
           }
         }
+        // if "a to z" selected -> unselect "z to a" and vice versa
         if (buttonId == this.btnList[1].label) {
           (this.btnList[0].value = false),
             $("#" + this.btnList[0].label).css("box-shadow", "none");
@@ -234,10 +250,11 @@ export default {
             $("#" + this.btnList[1].label).css("box-shadow", "none");
         }
       }
-    }
+    },
   },
   beforeMount() {
-    this.reponse = this.cryptos;
+    // next line allow to dev (see line 90)
+    // this.reponse = this.cryptos;
   },
   mounted() {},
 };
@@ -246,119 +263,5 @@ import { assertExpressionStatement } from "@babel/types";
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
 
-#crypto-main {
-  width: 80%;
-}
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: block;
-  margin: 20px 10px;
-}
-a {
-  color: #42b983;
-}
-.items-modePro.items-modePro{
-  width: 28%;
-}
-.items {
-  width:22% ;
-  min-height: 70px;
-  border-radius: 15px;
-  background: #ffffffe0;
-  min-width: 200px;
-  max-width: 45%;
-  margin: 1%;
-  padding-left: 20px;
-  font-size: 12px;
-  margin-top: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 13px 9px 0px;
-}
-
-.items > div {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  margin-right: 5px;
-}
-#crypto-main {
-  margin: auto;
-  margin-top: 50px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-wrap: wrap;
-}
-.crypto_symbol {
-  color: rgba(0, 0, 0, 0.795);
-  font-size: 18px;
-  font-weight: 700;
-}
-.rest {
-  margin: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 70%;
-}
-img {
-  vertical-align: bottom;
-}
-.crypto_avgPrice {
-  margin-top: 5px;
-  white-space: nowrap;
-}
-#loading {
-  width: 100px;
-  height: 10px;
-
-  position: fixed;
-  top: 50%;
-  left: 45%;
-  transform: translate(-50%, -50%);
-
-  border-radius: 10px;
-}
-#loading::before {
-  background-color: rgba(53, 66, 187, 0.39);
-
-  position: absolute;
-  content: " ";
-  width: 10px;
-  height: 10px;
-
-  animation: loadingAnimation infinite 1s linear;
-}
-@keyframes loadingAnimation {
-  0% {
-    width: 10px;
-    margin-left: 90px;
-  }
-  25% {
-    width: 100px;
-    margin-left: 0%;
-  }
-  50% {
-    width: 10px;
-    margin-left: 0%;
-  }
-  75% {
-    width: 100px;
-    margin-left: 0%;
-  }
-  100% {
-    width: 10px;
-    margin-left: 90px;
-  }
-}
-</style>
+<style src="@/assets/styles/style.css" scoped></style>

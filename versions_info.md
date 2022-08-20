@@ -46,3 +46,5 @@ Liste des améliorations :
 - ajout d'affichage pour le mode Pro, 
 - v-if pour afficher le nom de la devise pour chaque élément, 
 - ajout de style pour le mode Pro
+
+$$v0.0.121$$

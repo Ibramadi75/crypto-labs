@@ -20,7 +20,16 @@
     @change="this.Tri(this.trieur)"
   />
   <button @click="Tri(this.trieur)">Trier</button>
+  <button @click="BestSelection(this.reponse, 'priceChangePercent')">do</button>
   <section id="crypto-main">
+    <div class="bestSelection">
+      <!-- should reuse the component mentioned in the next line here  -->
+      <ul>
+        <li v-for="crypto in bestSelection" v-bind:key="crypto.id"></li>
+      </ul>
+    </div>
+
+    <!-- should be a component  -->
     <div class="items" v-for="crypto in reponse" v-bind:key="crypto.id">
       <div class="crypto_symbol">
         <span v-if="!modePro"
@@ -153,6 +162,7 @@ export default {
         },
       ],
       modePro: false,
+      bestSelection : [""]
     };
   },
   methods: {
@@ -195,6 +205,13 @@ export default {
       // sort z to a
       list.sort((b, a) => {
         return a.symbol > b.symbol ? 1 : -1;
+      });
+    },
+    BestSelection(list, param){
+      let tempoList = list;
+      tempoList.sort((a, b) => {
+        tempoList[""] = parseInt(a[param]) > parseInt(b[param]) ? -1 : 1;
+        this.bestSelection = tempoList.slice(0,6);
       });
     },
     Tri(trieur) {
@@ -250,13 +267,14 @@ export default {
             $("#" + this.btnList[1].label).css("box-shadow", "none");
         }
       }
-    },
+    }
   },
   beforeMount() {
     // next line allow to dev (see line 90)
     // this.reponse = this.cryptos;
   },
-  mounted() {},
+  mounted() {
+  },
 };
 
 import { assertExpressionStatement } from "@babel/types";

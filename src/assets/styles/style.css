@@ -21,7 +21,7 @@ li {
 }
 
 a {
-  color: #42b983;
+  color: #425eb9;
 }
 
 img {
@@ -97,7 +97,7 @@ img {
 }
 
 #loading::before {
-  background-color: rgba(53, 66, 187, 0.39);
+  background-color: #425eb9;
 
   position: absolute;
   content: " ";

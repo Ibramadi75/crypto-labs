@@ -27,13 +27,13 @@ nav a {
 }
 
 nav a.router-link-exact-active {
-  color: #42b983;
+  color: #425eb9;
 }
 
 button{
   padding: 10px;
   margin: 10px;
-  border: 1px solid rgb(199, 195, 253);
+  border: 1px solid #425eb9;
   border-radius: 20px;
   transition-duration: .3s;
   cursor: pointer;
